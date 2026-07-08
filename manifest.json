@@ -3,12 +3,12 @@
   "short_name": "入口",
   "icons": [
     {
-      "src": "https://script.google.com/macros/s/AKfycbzS_ukfHJbbHyfcMTX7qyJKzI83PFMt6C5ZO_gROP4fvJk-iQT6K2SFJCkrt2liPa289w/exec",
+      "src": "icon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://script.google.com/macros/s/AKfycbzS_ukfHJbbHyfcMTX7qyJKzI83PFMt6C5ZO_gROP4fvJk-iQT6K2SFJCkrt2liPa289w/exec",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
