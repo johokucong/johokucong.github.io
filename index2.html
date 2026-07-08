@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="apple-touch-icon" href="icon-180.png">
-  <link rel="manifest" href="manifest.json">
+<!-- iPhone 用アイコン -->
+<link rel="apple-touch-icon" href="icon-180.png">
 
-  <title>入口アプリ（テスト）</title>
+<!-- Android 用 manifest -->
+<link rel="manifest" href="manifest.json">
 
-  <script>
-    window.onload = function() {
-      const targetUrl = "https://script.google.com/macros/s/AKfycbxeFHuNKHu2sagAQeSksVc7bUe4f5qz1peyyUjr9W-wJy3aNPLIQjegYzC9SvihlLDlaw/exec";
-      setTimeout(() => {
-        window.location.replace(targetUrl);
-      }, 800);
-    };
-  </script>
+<title>入口アプリ（テスト）</title>
 </head>
+
 <body>
+<p>入口アプリ（テスト）</p>
+
+<script>
+// manifest.json を確実に読み込ませるため、少し待つ
+window.onload = function() {
+    const targetUrl = "https://script.google.com/macros/s/AKfycbxFHuHKHUh2sagAQeSkVc7bUe4f5qz1peyyUjg9M-wJy3aMPljOJegyZC9svihL/exec";
+
+    setTimeout(() => {
+        location.replace(targetUrl);
+    }, 1500); // ← 1.5秒待つことで manifest.json が確実に登録される
+};
+</script>
+
 </body>
 </html>
-
