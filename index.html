@@ -1,30 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- iPhone 用アイコン（GAS PNG） -->
 <link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
 
-  <!-- Android 用 manifest（GAS JSON） -->
-  <link rel="manifest" href="manifest.json">
-
-  <title>入口アプリ</title>
-
-  <script>
-    // GitHub Pages → GAS の本体アプリへジャンプ
-    window.onload = function() {
-      // A1 の URL（本体アプリ）を直接指定
-      const targetUrl = "https://script.google.com/macros/s/AKfycbxeFHuNKHu2sagAQeSksVc7bUe4f5qz1peyyUjr9W-wJy3aNPLIQjegYzC9SvihlLDlaw/exec"; 
-      // ↑ あなたの本体アプリの URL をここに入れる（今まで入口アプリがジャンプしていた A1 の URL）
-
-      setTimeout(() => {
-        window.location.replace(targetUrl); // 戻るボタンでは戻らない
-      }, 800); // アイコン読み込みのため 0.8秒待つ（最適値）
-    };
-  </script>
+<title>入口アプリ</title>
 </head>
+
 <body>
+
+<div id="installPrompt" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+">
+  <div style="
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+    font-size: 18px;
+  ">
+    <p>このアプリをホーム画面に追加できます。</p>
+    <button id="okButton" style="
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    ">OK</button>
+  </div>
+</div>
+
+<div id="howToAdd" style="
+  display: none;
+  padding: 20px;
+  font-size: 18px;
+  text-align: center;
+">
+  <p>ホーム画面に追加するには：</p>
+  <p>① Safari の共有ボタンを押す</p>
+  <p>②「ホーム画面に追加」を選ぶ</p>
+  <p>③ 追加を押す</p>
+</div>
+
+<script>
+// 初回だけ案内を出す
+if (!localStorage.getItem("installed")) {
+  document.getElementById("installPrompt").style.display = "flex";
+}
+
+document.getElementById("okButton").onclick = function() {
+  document.getElementById("installPrompt").style.display = "none";
+  document.getElementById("howToAdd").style.display = "block";
+  localStorage.setItem("installed", "true");
+};
+
+// ユーザーがホーム画面から起動したときに GAS へ飛ぶ
+window.onload = function() {
+    const targetUrl = "https://script.google.com/macros/s/AKfycbxFHuHKHUh2sagAQeSkVc7bUe4f5qz1peyyUjg9M-wJy3aMPljOJegyZC9svihL/exec";
+
+    // ホーム画面から起動した場合だけリダイレクト
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        location.replace(targetUrl);
+    }
+};
+</script>
+
 </body>
 </html>
