@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- iPhone 用アイコン（GAS PNG） -->
+  <link rel="apple-touch-icon" href="https://script.google.com/macros/s/AKfycbzS_ukfHJbbHyfcMTX7qyJKzI83PFMt6C5ZO_gROP4fvJk-iQT6K2SFJCkrt2liPa289w/exec">
+
+  <!-- Android 用 manifest（GAS JSON） -->
+  <link rel="manifest" href="manifest.json">
+
+  <title>入口アプリ</title>
+
+  <script>
+    // GitHub Pages → GAS の本体アプリへジャンプ
+    window.onload = function() {
+      // A1 の URL（本体アプリ）を直接指定
+      const targetUrl = "https://script.google.com/macros/s/AKfycbx0u1YgYb8r0f5eQk4t8eG6L8p0o8mYt8b8t8t8t8t8/exec"; 
+      // ↑ あなたの本体アプリの URL をここに入れる（今まで入口アプリがジャンプしていた A1 の URL）
+
+      setTimeout(() => {
+        window.location.replace(targetUrl); // 戻るボタンでは戻らない
+      }, 800); // アイコン読み込みのため 0.8秒待つ（最適値）
+    };
+  </script>
+</head>
+<body>
+</body>
+</html>
