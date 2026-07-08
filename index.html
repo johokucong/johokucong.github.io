@@ -1,5 +1,65 @@
-<script>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- iPhone 用アイコン -->
+<link rel="apple-touch-icon" href="icon-180.png">
+
+<!-- Android 用 manifest -->
+<link rel="manifest" href="manifest.json">
+
+<title>入口アプリ</title>
+</head>
+
+<body>
+
+<!-- 初回だけ表示する案内UI（ブラウザ起動時のみ） -->
+<div id="installPrompt" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+">
+  <div style="
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+    font-size: 18px;
+  ">
+    <p>このアプリをホーム画面に追加できます。</p>
+    <button id="okButton" style="
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    ">OK</button>
+  </div>
+</div>
+
+<!-- ホーム画面追加の説明（内容は自由に変更可能） -->
+<div id="howToAdd" style="
+  display: none;
+  padding: 20px;
+  font-size: 18px;
+  text-align: center;
+">
+  <p>この状態でホーム画面に追加できます</p>
+  <p>追加したら一旦閉じてアイコンの出来上がりです</p>
+</div>
+
+<script>
 // ホーム画面から起動したか判定
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
@@ -18,10 +78,13 @@ if (!isStandalone) {
 
 // ホーム画面から起動した場合だけ GAS に飛ぶ
 window.onload = function() {
-    const targetUrl = "https://script.google.com/macros/s/AKfycbxeFHuNKHu2sagAQeSksVc7bUe4f5qz1peyyUjr9W-wJy3aNPLIQjegYzC9SvihlLDlaw/exec";
+    const targetUrl = "https://script.google.com/macros/s/AKfycbxFHuHKHUh2sagAQeSkVc7bUe4f5qz1peyyUjg9M-wJy3aMPljOJegyZC9svihL/exec";
 
     if (isStandalone) {
         location.replace(targetUrl);
     }
 };
 </script>
+
+</body>
+</html>
