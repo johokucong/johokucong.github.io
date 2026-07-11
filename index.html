@@ -79,11 +79,9 @@ if (!isStandalone) {
 // ホーム画面から起動した場合だけ GAS に飛ぶ
 window.onload = function() {
     if (isStandalone) {
-        // GitHub Pages の config.json を取得
-        fetch("https://johokucong.github.io/config.json")
+        fetch("https://johokucong.github.io/config.json?nocache=" + Date.now())
             .then(res => res.json())
             .then(cfg => {
-                // 最新 mainapp の URL に飛ぶ
                 location.replace(cfg.mainapp);
             })
             .catch(() => {
