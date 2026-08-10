@@ -82,14 +82,15 @@
 function isLockedPeriod() {
   const now = new Date();
 
-  // 8/12 20:00 〜 8/15 7:00
-  const start = new Date("2026-08-11T00:20:00");
+  const start = new Date("2026-08-11T00:23:00");
   const end   = new Date("2026-08-15T07:00:00");
 
   return now >= start && now <= end;
 }
 
-const PASSCODE = "274"; // 暗証番号
+const PASSCODE = "274";
+
+// ★ isStandalone を固定値として保持（重要）
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
 
@@ -110,7 +111,7 @@ function proceedNormal() {
       };
   }
 
-  // ★ DOMContentLoaded を使わず即実行（重要）
+  // ★ 即実行（DOMContentLoaded を使わない）
   if (isStandalone) {
       fetch("https://johokucong.github.io/config.json?nocache=" + Date.now())
           .then(res => res.json())
