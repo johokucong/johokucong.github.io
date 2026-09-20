@@ -97,7 +97,7 @@
 // ★ standalone 判定（固定）
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
-// ★ 注意事項ダイアログ表示関数
+// ★ 注意事項ダイアログ表示関数（OK後に mainapp へ）
 function showNotice(message, nextUrl) {
   const dialog = document.getElementById("noticeDialog");
   const text = document.getElementById("noticeText");
@@ -107,7 +107,7 @@ function showNotice(message, nextUrl) {
 
   document.getElementById("noticeOk").onclick = function() {
     dialog.style.display = "none";
-    location.replace(nextUrl);   // ★ OK を押した後に mainapp へ
+    location.replace(nextUrl);   // ★ OK後に mainapp へ
   };
 }
 
@@ -136,7 +136,7 @@ function proceedNormal() {
         // ★ notice があるときだけ表示して、OK後に mainapp へ
         if (cfg.notice) {
           showNotice(cfg.notice, cfg.mainapp);
-          return; // ★ ここで終了（即ジャンプを防ぐ）
+          return; // ★ 即ジャンプを防ぐ
         }
 
         // notice がない場合は即ジャンプ
