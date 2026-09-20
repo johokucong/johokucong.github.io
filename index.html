@@ -16,20 +16,17 @@
       "Yu Gothic",
       "Noto Sans JP",
       sans-serif;
-    font-size: 30px;   /* ★ 全体の基本フォントサイズを大きめに */
+    font-size: 20px;
   }
 
-  /* ダイアログ内の文字をさらに少し大きく */
   #noticeDialog p {
-    font-size: 30px;
+    font-size: 21px;
   }
 
-  /* ボタンも見やすく */
   button {
-    font-size: 30px;
+    font-size: 20px;
   }
 </style>
-
 
 </head>
 
@@ -53,12 +50,10 @@
     width: 80%;
     max-width: 320px;
     text-align: center;
-    font-size: 18px;
   ">
     <p>このアプリをホーム画面に追加できます。</p>
     <button id="okButton" style="
       padding: 10px 20px;
-      font-size: 18px;
       border-radius: 8px;
       background: #007bff;
       color: white;
@@ -72,7 +67,6 @@
 <div id="howToAdd" style="
   display: none;
   padding: 20px;
-  font-size: 18px;
   text-align: center;
 ">
   <p>この状態でホーム画面に追加できます</p>
@@ -97,15 +91,19 @@
     width: 85%;
     max-width: 340px;
     text-align: center;
-    font-size: 18px;
-    line-height: 1.6;
   ">
-    <p style="font-weight:bold; font-size:20px;">区域係より兄弟姉妹へのおねがい</p>
+    <p style="font-weight:bold; font-size:22px;">ご利用にあたって</p>
     <p id="noticeText"></p>
+
+    <!-- ★ 次から表示しないチェック -->
+    <label style="display:flex; align-items:center; gap:8px; margin-top:15px; font-size:18px;">
+      <input type="checkbox" id="noticeSkip" style="transform: scale(1.4);">
+      次から表示しない
+    </label>
+
     <button id="noticeOk" style="
       margin-top: 15px;
       padding: 10px 20px;
-      font-size: 18px;
       border-radius: 8px;
       background: #007bff;
       color: white;
@@ -117,7 +115,7 @@
 
 <script>
 
-// ★ standalone 判定（固定）
+// ★ standalone 判定
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
 // ★ 注意事項ダイアログ表示（OK後に mainapp へ）
@@ -129,8 +127,14 @@ function showNotice(message, nextUrl) {
   dialog.style.display = "flex";
 
   document.getElementById("noticeOk").onclick = function() {
+
+    // ★ チェックされていたら次回からスキップ
+    if (document.getElementById("noticeSkip").checked) {
+      localStorage.setItem("skipNotice", "true");
+    }
+
     dialog.style.display = "none";
-    location.replace(nextUrl);   // ★ OK後に mainapp へ
+    location.replace(nextUrl);
   };
 }
 
@@ -152,17 +156,24 @@ function proceedNormal() {
 
   // ホーム画面起動 → config.json を読み、notice があれば表示
   if (isStandalone) {
+
+    // ★ すでに「次から表示しない」が設定されている場合はスキップ
+    if (localStorage.getItem("skipNotice") === "true") {
+      fetch("https://johokucong.github.io/config.json?nocache=" + Date.now())
+        .then(res => res.json())
+        .then(cfg => location.replace(cfg.mainapp));
+      return;
+    }
+
     fetch("https://johokucong.github.io/config.json?nocache=" + Date.now())
       .then(res => res.json())
       .then(cfg => {
 
-        // ★ notice があるときだけ表示して、OK後に mainapp へ
         if (cfg.notice) {
           showNotice(cfg.notice, cfg.mainapp);
-          return; // ★ 即ジャンプを防ぐ
+          return;
         }
 
-        // notice がない場合は即ジャンプ
         location.replace(cfg.mainapp);
       })
       .catch(() => {
