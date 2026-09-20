@@ -98,7 +98,7 @@
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
 // ★ 注意事項ダイアログ表示関数
-function showNotice(message) {
+function showNotice(message, nextUrl) {
   const dialog = document.getElementById("noticeDialog");
   const text = document.getElementById("noticeText");
 
@@ -107,6 +107,7 @@ function showNotice(message) {
 
   document.getElementById("noticeOk").onclick = function() {
     dialog.style.display = "none";
+    location.replace(nextUrl);   // ★ OK を押した後に mainapp へ
   };
 }
 
@@ -126,18 +127,19 @@ function proceedNormal() {
     };
   }
 
-  // ホーム画面起動 → config.json を読み、notice があれば表示して mainapp へ
+  // ホーム画面起動 → config.json を読み、notice があれば表示
   if (isStandalone) {
     fetch("https://johokucong.github.io/config.json?nocache=" + Date.now())
       .then(res => res.json())
       .then(cfg => {
 
-        // ★ notice があるときだけ表示
+        // ★ notice があるときだけ表示して、OK後に mainapp へ
         if (cfg.notice) {
-          showNotice(cfg.notice);
+          showNotice(cfg.notice, cfg.mainapp);
+          return; // ★ ここで終了（即ジャンプを防ぐ）
         }
 
-        // ★ mainapp にジャンプ
+        // notice がない場合は即ジャンプ
         location.replace(cfg.mainapp);
       })
       .catch(() => {
