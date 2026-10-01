@@ -114,10 +114,15 @@
 </div>
 
 <script>
+// ★ standalone / Android APK 判定
+const urlParams = new URLSearchParams(window.location.search);
 
-// ★ standalone 判定
-const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+const isAndroidApp =
+  urlParams.get("androidapp") === "1";
 
+const isStandalone =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  isAndroidApp;
 // ★ 注意事項ダイアログ表示（OK後に mainapp へ）
 function showNotice(message, nextUrl) {
   const dialog = document.getElementById("noticeDialog");
